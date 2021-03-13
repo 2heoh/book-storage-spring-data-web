@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${book.title}">List of all books</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col" style="padding: .5em;">
+            <h1 th:if="${book.title != null}">Edit book</h1>
+            <h1 th:if="${book.title == null}">Add book</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/">
+                <button type="button" class="btn btn-primary">All books</button>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <form th:action="@{/save-book/}" action="/books.html" method="POST"
+              multiple="multiple"
+              enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="id" th:value="${book.id}">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input name="title" class="form-control" id="title" type="text" th:value="${book.title}" value="title"
+                       size="50"/>
+            </div>
+            <div class="form-group">
+                <label for="authors">Author:</label>
+                <select multiple="multiple" class="form-control" id="authors" type="text" name="authors">
+                    <option value="#"
+                        th:value="${author.id}"
+                        th:text="${author.name}"
+                        th:each="author : ${authors}"
+                        th:selected="(${book.authors.contains(author)})"
+                    >Author name
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="genre">Genre:</label>
+                <select class="form-control" id="genre" type="text" name="genre">
+                    <option value="#"
+                            th:value="${genre.id}"
+                            th:text="${genre.name}"
+                            th:each="genre : ${genres}"
+                            th:selected="(${genre.id}==${book.genre.id})">Genre
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea name="description" class="form-control" id="description" th:text="${book.description}"
+                          cols="50" rows="5">book description</textarea>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Save">
+            </div>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

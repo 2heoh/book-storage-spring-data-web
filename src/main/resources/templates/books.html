@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all books</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>List of books</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="padding: .5em;">
+            <a href="/add-book">
+                <button type="button" class="btn btn-primary">Add book</button>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <th scope="row" th:text="${book.id}">1</th>
+                    <td><a href="#" th:text="${book.title}" th:href="@{/view-book/{id}(id=${book.id})}">The bible</a>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a th:href="@{/view-book/{id}#comments(id=${book.id})}" href="book/edit.html">
+                                <button type="button" class="btn btn-info">Comments:
+                                    <span th:text="${book.comments?.size()}" class="badge badge-light">#</span>
+                                </button>
+                            </a>
+                            <a th:href="@{/edit-book/{id}(id=${book.id})}" href="book/edit.html">
+                                <button type="button" class="btn btn-secondary">Edit</button>
+                            </a>
+                            <a th:href="@{/delete-book/{id}(id=${book.id})}" href="book/edit.html">
+                                <button type="button" class="btn btn-danger">Delete</button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
