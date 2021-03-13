@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit comment</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col" style="padding: .5em;">
+            <h1>Edit comment</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/">
+                <button type="button" class="btn btn-primary">All books</button>
+            </a>
+            <a th:href="@{/view-book/{bookId}(bookId=${bookId})}">
+                <button type="button" class="btn btn-primary">
+                    View book
+                    <span th:text="${bookId}" class="badge badge-light">#</span>
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <form th:action="@{/save-comment/}" action="/books.html" method="POST"
+              multiple="multiple"
+              enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="id" th:value="${comment.id}">
+            <input type="hidden" name="bookId" th:value="${bookId}">
+            <div class="form-group">
+                <label for="author">Author:</label>
+                <input name="author" class="form-control" id="author" type="text" th:value="${comment.author}" value="title" size="50"/>
+            </div>
+            <div class="form-group">
+                <label for="text">Text:</label>
+                <input name="text" class="form-control" id="text" type="text" th:value="${comment.text}" value="title" size="50"/>
+                </select>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Save">
+            </div>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

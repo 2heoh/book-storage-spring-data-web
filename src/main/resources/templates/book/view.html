@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${book.title}">List of all books</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col" style="padding: .5em;">
+            <a href="/">
+                <button type="button" class="btn btn-primary">All books</button>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1 th:text="${book.title}">The bible</h1>
+            <a href="#" th:href="@{/edit-book/{id}(id=${book.id})}">
+
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <button type="button" class="btn btn-warning">by:
+                <span th:each="author: ${book.getAuthors()}">
+                    <span class="badge badge-secondary" th:text="${author.name}">author</span>
+                </span>
+            </button>
+            <button type="button" class="btn btn-success">
+                Genre: <span th:text="${book.genre.name}" class="badge badge-light">Classics</span>
+            </button>
+            <a href="#" th:href="@{/edit-book/{id}(id=${book.id})}">
+                <button type="button" class="btn btn-secondary">Edit</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 5em;">
+
+        <div class="col">
+            <h4>Description:</h4>
+            <div th:text="${book.description}">
+                Some description
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10em;">
+        <div class="col">
+            <h2 id="comments">Comments:</h2>
+        </div>
+    </div>
+    <div class="row" th:each="comment : ${book.comments}" style="padding: .5em;">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${comment.author}">Author</h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${comment.date}">date</h6>
+                    <p class="card-text" th:text="${comment.text}">text</p>
+                    <a th:href="@{/view-book/{bookId}/edit-comment/{id}(bookId=${book.id}, id=${comment.id})}" href="#"
+                       class="card-link">
+                        <button type="button" class="btn btn-secondary">Edit</button>
+                    </a>
+                    <a th:href="@{/view-book/{bookId}/delete-comment/{id}(bookId=${book.id}, id=${comment.id})}" href="#" class="card-link">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding: .5em;">
+        <div class="col">
+            <h2>Add comment:</h2>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <form th:action="@{/save-comment/}" method="post" enctype="application/x-www-form-urlencoded">
+                        <input name="bookId" type="hidden" th:value="${book.id}"/>
+                        <div class="form-group">
+                            <label for="title">Author:</label>
+                            <input name="author" class="form-control" id="title" type="text" size="30"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Text:</label>
+                            <textarea name="text" class="form-control" id="description" cols="30" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" value="Save">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
